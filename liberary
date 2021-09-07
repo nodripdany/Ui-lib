@@ -87,7 +87,7 @@ do
 			)
 			draw.Size = Vector2.new(draw.Size.X+2,draw.Size.Y+2)
 		endxt')
-		text.Text = 'UI Library\n\n\n\nDeveloped By:\Notpandabrothers'
+		text.Text = 'Phantom Hub\n\n\n\nDeveloped By:\Notpandabrothers'
 		text.Center = true
 		text.Color = Color3.fromRGB(255,255,255)
 		text.Size = 30
