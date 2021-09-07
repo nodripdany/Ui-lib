@@ -90,7 +90,7 @@ do
 
 		draw.Transparency = 1
 		local text = Drawing.new('Text')
-		text.Text = 'UI Library\n\n\n\nDeveloped By:\nKingUnspirited'
+		text.Text = 'Phantom Hub\n\n\n\nDeveloped By:\nNotpandabrothers'
 		text.Center = true
 		text.Color = Color3.fromRGB(255,255,255)
 		text.Size = 30
