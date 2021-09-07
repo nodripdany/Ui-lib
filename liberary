@@ -1,7 +1,7 @@
 repeat wait() until game:IsLoaded()
- 
+
 local LB_MODULE = {}
- 
+
 do
 	local getService = function(name)
 		repeat wait() until game:GetService(name) ~= nil
@@ -44,34 +44,34 @@ do
 			TITLEBAR = Color3.fromRGB(30,30,30);
 		}
 	}
- 
+
 	for a,b in next, Main.REQUIRED do
 		if not b then
 			table.insert(Main.MISSING, a)
 		end
 	end
- 
+
 	if #Main.MISSING ~= 0 then
 		sendNotification('[UI LIB] Missing Feature(s)', table.concat(Main.MISSING, ', '))
 		script:Destroy()
 		return nil
 	end
- 
+
 	if getgenv().LBConnections and typeof(getgenv().LBConnections) == 'table' then
 		for a,b in next, getgenv().LBConnections do
 			b:Disconnect()
 		end
 	end
- 
+
 	for a,b in next, Main.Services.CoreGui:children() do
 		if string.find(b.Name, 'LB UI Library') then
 			b:Destroy()
 		end
 	end
- 
+
 	if getgenv().UILibrary_Loading then return nil end
 	getgenv().UILibrary_Loading = true
- 
+
 	if Drawing then
 		local draw = Drawing.new('Square')
 		draw.Size = Vector2.new(0,0)
@@ -86,8 +86,11 @@ do
 				(workspace.CurrentCamera.ViewportSize.Y / 2) - i
 			)
 			draw.Size = Vector2.new(draw.Size.X+2,draw.Size.Y+2)
-		endxt')
-		text.Text = 'Phantom Hub\n\n\n\nDeveloped By:\Notpandabrothers'
+		end
+
+		draw.Transparency = 1
+		local text = Drawing.new('Text')
+		text.Text = 'UI Library\n\n\n\nDeveloped By:\nKingUnspirited'
 		text.Center = true
 		text.Color = Color3.fromRGB(255,255,255)
 		text.Size = 30
@@ -118,14 +121,14 @@ do
 		draw:Remove()
 		text:Remove()
 	end
- 
+
 	getgenv().UILibrary_Loading = false
- 
+
 	Main.GUI = Instance.new('ScreenGui', Main.Services.CoreGui)
 	Main.GUI.Name = 'LB UI Library' .. getService('HttpService'):GenerateGUID()
 	sendNotification('UI Library Loaded!', 'Press F1 to show/hide windows!\n- KingUnspirited')
 	sendNotification('Credits', '`Someone Insane` for giving me an idea to use the style of a mac button!')
- 
+
 	function LB_MODULE:Create(window, instance, props)
 		local a = Instance.new(instance)
 		for b,c in next, props do
@@ -135,19 +138,19 @@ do
 				pcall(function()a['ZIndex']=0;end)
 			end
 		end
- 
+
 		if window then
 			a.Parent = window
 		else
 			a.Parent = Main.GUI
 		end
- 
+
 		return a
 	end
- 
+
 	local windowPos = 0
 	getgenv().LBConnections = {}
- 
+
 	local windowMoving = false
 	local currentWindow = nil
 	local windowFocused = false
@@ -155,7 +158,7 @@ do
 	local sliderMoving = false
 	local selectionOpened = false
 	local mouseDown = false
- 
+
 	table.insert(getgenv().LBConnections,
 		Main.Services.UserInputService.InputEnded:connect(function(key)
 			if key.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -163,7 +166,7 @@ do
 			end
 		end)
 	)
- 
+
 	function LB_MODULE:AddWindow(title)
 		local height = 40
 		local transition = false
@@ -175,13 +178,13 @@ do
 			Size = UDim2.new(0,200,0,height);
 			ZIndex = 0;
 		})
- 
+
 		self:Create(window, 'Frame', {
 			BackgroundColor3 = Main.COLOR.TITLEBAR;
 			Position = UDim2.new(0,0,0,0);
 			Size = UDim2.new(1,0,0,25);
 		})
- 
+
 		table.insert(getgenv().LBConnections,
 			Main.Services.UserInputService.InputBegan:connect(function(key)
 				if window ~= nil then
@@ -193,7 +196,7 @@ do
 				end
 			end)
 		)
- 
+
 		
 		windowPos = windowPos + 250
 		
@@ -208,7 +211,7 @@ do
 		})
 		
 		------------------
- 
+
 		local rBtn = self:Create(window, 'ImageButton', {
 			BackgroundTransparency = 1;
 			Image = 'rbxthumb://type=Asset&id=4693046251&w=150&h=150';
@@ -219,7 +222,7 @@ do
 			Text = '';
 			TextColor3 = Main.COLOR.TEXT
 		})
- 
+
 		rBtn.MouseButton1Click:connect(function()
 			if currentWindow == window then
 				if #Main.GUI:children() == 1 then
@@ -244,9 +247,9 @@ do
 				end)
 			end
 		end)
- 
+
 		------------------
- 
+
 		local gBtn = self:Create(window, 'ImageButton', {
 			BackgroundTransparency = 1;
 			Image = 'rbxthumb://type=Asset&id=4693044547&w=150&h=150';
@@ -257,7 +260,7 @@ do
 			Text = '';
 			TextColor3 = Main.COLOR.TEXT
 		})
- 
+
 		gBtn.MouseButton1Click:connect(function()
 			if currentWindow == window then
 				if not transition then
@@ -275,9 +278,9 @@ do
 				end
 			end
 		end)
- 
+
 		------------------
- 
+
 		local oBtn = self:Create(window, 'ImageButton', {
 			BackgroundTransparency = 1;
 			Image = 'rbxthumb://type=Asset&id=4693046726&w=150&h=150';
@@ -288,7 +291,7 @@ do
 			Text = '';
 			TextColor3 = Main.COLOR.TEXT
 		})
- 
+
 		oBtn.MouseButton1Click:connect(function()
 			if currentWindow == window then
 				if not transition then
@@ -306,9 +309,9 @@ do
 				end
 			end
 		end)
- 
+
 		------------------
- 
+
 		window.MouseMoved:connect(function()
 			if not currentWindow and not selectionOpened then
 				for a,b in next, window:children() do
@@ -324,7 +327,7 @@ do
 				windowFocused = true
 			end
 		end)
- 
+
 		------------------
 		
 		window.MouseLeave:connect(function()
@@ -345,9 +348,9 @@ do
 				windowFocused = false
 			end
 		end)
- 
+
 		------------------
- 
+
 		window.InputBegan:connect(function(key)
 			if window == currentWindow then
 				if not sliderFocused then
@@ -388,9 +391,9 @@ do
 				end
 			end
 		end)
- 
+
 		------------------
- 
+
 		local windowModule = {}
 		function windowModule:Label(text)
 			if not text or typeof(text) ~= 'string' then
@@ -404,14 +407,14 @@ do
 				Text = text or 'Untitled';
 				TextColor3 = Main.COLOR.TEXT;
 			})
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
 			return windowModule
 		end
- 
+
 		------------------
- 
+
 		function windowModule:Button(text, callback)
 			if not text or typeof(text) ~= 'string' then
 				return sendNotification('Invalid Text!', 'You must set the text as a string for this button!')
@@ -428,20 +431,20 @@ do
 				TextXAlignment = 2;
 				TextYAlignment = 1;
 			})
- 
+
 			btn.MouseButton1Click:connect(function()
 				if window == currentWindow then
 					callback()
 				end
 			end)
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
 			return windowModule
 		end
- 
+
 		------------------
- 
+
 		function windowModule:Toggle(text, callback)
 			if not text or typeof(text) ~= 'string' then
 				return sendNotification('Invalid Text!', 'You must set the text as a string for this toggle!')
@@ -449,7 +452,7 @@ do
 			if not callback or typeof(callback) ~= 'function' then
 				return sendNotification('Invalid Callback!', 'You must set the callback as a function for this toggle: ' .. title)
 			end
- 
+
 			local btn = LB_MODULE:Create(window, 'TextButton', {
 				BackgroundColor3 = Color3.fromRGB(140,0,0);
 				Position = UDim2.new(0,10,0,height-10);
@@ -459,21 +462,21 @@ do
 				TextXAlignment = 2;
 				TextYAlignment = 1;
 			})
- 
+
 			btn.MouseButton1Click:connect(function()
 				if window == currentWindow then
 					btn.BackgroundColor3 = btn.BackgroundColor3 == Color3.fromRGB(140,0,0) and Color3.fromRGB(0,140,0) or Color3.fromRGB(140,0,0)
 					callback()
 				end
 			end)
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
 			return windowModule
 		end
- 
+
 		------------------
- 
+
 		function windowModule:Selection(title, options)
 			if not title or typeof(title) ~= 'string' then
 				return sendNotification('Invalid Title!', 'You must set the title as a string for this selection!')
@@ -495,15 +498,15 @@ do
 				TextYAlignment = 1;
 				TextColor3 = Main.COLOR.TEXT;
 			})
- 
+
 			height = height + 20
- 
+
 			local labelWindow = LB_MODULE:Create(window, 'Frame', {
 				BackgroundColor3 = Main.COLOR.SELECTEDBG;
 				Position = UDim2.new(0,10,0,height-10);
 				Size = UDim2.new(0, 180, 0, 20);
 			})
- 
+
 			local label = LB_MODULE:Create(labelWindow, 'TextLabel', {
 				Position = UDim2.new(.5,0,0,0);
 				TextSize = 10;
@@ -512,12 +515,12 @@ do
 				Text = tostring(options[1]);
 				TextColor3 = Main.COLOR.SELECTEDTEXT;
 			})
- 
- 
+
+
 			local selectionHeight = 0
 			local _transition = false
 			local closed = true
- 
+
 			local selectionWindow = LB_MODULE:Create(window, 'ScrollingFrame', {
 				BackgroundColor3 = Color3.fromRGB(60,60,60);
 				Position = UDim2.new(0,10,0,height+10);
@@ -525,11 +528,11 @@ do
 				Visible = false;
 			})
 			selectionWindow.ZIndex = 100
- 
+
 			selectionWindow.ChildAdded:connect(function()
 				selectionWindow.CanvasSize = UDim2.new(0,180,0,selectionHeight+20)
 			end)
- 
+
 			local sBtn = LB_MODULE:Create(labelWindow, 'TextButton', {
 				BackgroundTransparency = 1;
 				Size = UDim2.new(0,20,0,20);
@@ -537,9 +540,9 @@ do
 				Text = 'v';
 				TextColor3 = Main.COLOR.BUTTONTEXT;
 			})
- 
+
 			local lostFocusEvent = nil
- 
+
 			local closeFunc = function()
 				if closed then
 					selectionOpened = true
@@ -558,7 +561,7 @@ do
 						lostFocusEvent:Disconnect()
 						lostFocusEvent = nil
 					end
- 
+
 					for i = selectionHeight >= 140 and 140 or selectionHeight,0, -5 do
 						Main.Services.RunService.RenderStepped:wait()
 						selectionWindow.Size = UDim2.new(0, 180, 0, i)
@@ -569,7 +572,7 @@ do
 				end
 				return true
 			end
- 
+
 			sBtn.MouseButton1Click:connect(function()
 				if window == currentWindow and not _transition then
 					_transition = true
@@ -603,7 +606,7 @@ do
 					_transition = false
 				end
 			end)
- 
+
 			for a,b in next, options do
 				local btn = LB_MODULE:Create(selectionWindow, 'TextButton', {
 					BackgroundColor3 = Main.COLOR.BUTTONBG;
@@ -625,14 +628,14 @@ do
 				btn.ZIndex = 100;
 				selectionHeight = selectionHeight + 20
 			end
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
 			return opts
 		end
- 
+
 		------------------
- 
+
 		function windowModule:Slider(title, minValue, maxValue, callback)
 			if not title or typeof(title) ~= 'string' then
 				return sendNotification('Invalid Title!', 'You must set a title as a string for this slider!')
@@ -654,7 +657,7 @@ do
 				Position = UDim2.new(0,10,0,height+5);
 				Size = UDim2.new(0,180,0,20);
 			})
- 
+
 			local cursor = LB_MODULE:Create(frame, 'Frame', {
 				BackgroundColor3 = Color3.fromRGB(180,180,180);
 				Position = UDim2.new(0,0,0,5);
@@ -668,7 +671,7 @@ do
 				TextColor3 = Color3.fromRGB(255,255,255);
 				TextYAlignment = 0;
 			})
- 
+
 			local aaa = LB_MODULE:Create(window, 'TextLabel', {
 				BackgroundTransparency = 1;
 				Position = UDim2.new(0,10,0,height-10);
@@ -678,7 +681,7 @@ do
 				TextXAlignment = 0;
 				TextYAlignment = 0;
 			})
- 
+
 			frame.InputBegan:connect(function()
 				if not windowMoving and not sliderMoving and currentWindow == window and not mouseDown then
 					local mouse = Main.Services.Players.LocalPlayer:GetMouse()
@@ -707,9 +710,9 @@ do
 					end
 				end
 			end)
- 
+
 			------------------
- 
+
 			cursor:GetPropertyChangedSignal('Position'):connect(function()
 				numValue.Text = tostring(
 					math.clamp(
@@ -725,30 +728,30 @@ do
 					)
 				)
 			end)
- 
+
 			numValue:GetPropertyChangedSignal('Text'):connect(function(property)
 				tbl.value = tonumber(numValue.Text)
 				if callback then
 					callback(tonumber(numValue.Text))
 				end
 			end)
- 
+
 			frame.MouseEnter:connect(function()
 				sliderFocused = true
 			end)
- 
+
 			frame.MouseLeave:connect(function()
 				sliderFocused = false
 			end)
- 
+
 			height = height + 35
 			window.Size = UDim2.new(0,200,0,height)
- 
+
 			return tbl
 		end
- 
+
 		------------------
- 
+
 		function windowModule:Text(placeholderText)
 			local tbl = {Text = ''}
 			local txtBox = LB_MODULE:Create(window, 'TextBox', {
@@ -761,28 +764,28 @@ do
 				Text = '';
 				TextColor3 = Color3.fromRGB(40,40,40);
 			})
- 
+
 			txtBox.Changed:connect(function()
 				tbl.Text = txtBox.Text
 			end)
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
- 
+
 			return tbl
 		end
- 
+
 		------------------
- 
+
 		function windowModule:KeyBind(title, key, callback)
 			if not title or typeof(title) ~= 'string' then
 				return sendNotification('Invalid Title!', 'You must set the title as a string for this keybind!')
 			end
- 
+
 			if not pcall(function() return Enum.KeyCode[key] end) then
 				return sendNotification('Invalid KeyCode!', 'You cannot set `'..tostring(key)..'` as a keybind!')
 			end
- 
+
 			local keyCode = nil
 			for a,b in next, Enum.KeyCode:GetEnumItems() do
 				if tostring(b) == string.format('Enum.KeyCode.%s', key) then
@@ -790,11 +793,11 @@ do
 					break
 				end
 			end
- 
+
 			if not callback or typeof(callback) ~= 'function' then
 				return sendNotification('Invalid Callback!', 'You must set the callback function for this keybind: ' .. key)
 			end
- 
+
 			table.insert(getgenv().LBConnections,
 				Main.Services.UserInputService.InputBegan:connect(function(key)
 					if key.KeyCode == keyCode then
@@ -802,7 +805,7 @@ do
 					end
 				end)
 			)
- 
+
 			LB_MODULE:Create(window, 'TextLabel', {
 				BackgroundTransparency = 1,
 				Position = UDim2.new(0,10,0,height-10);
@@ -813,7 +816,7 @@ do
 				Text = string.format('%s', title);
 				TextColor3 = Main.COLOR.TEXT;
 			})
- 
+
 			LB_MODULE:Create(window, 'TextLabel', {
 				BackgroundTransparency = 1,
 				Position = UDim2.new(0,10,0,height-10);
@@ -824,15 +827,15 @@ do
 				Text = string.format('[%s]', key);
 				TextColor3 = Main.COLOR.TEXT;
 			})
- 
+
 			height = height + 20
 			window.Size = UDim2.new(0,200,0,height)
- 
+
 			return window
 		end
- 
+
 		------------------
- 
+
 		function windowModule:GUIDestroy()
 			for a,b in next, getgenv().LBConnections do
 				b:Disconnect()
@@ -840,9 +843,9 @@ do
 			script:Destroy()
 			Main.GUI:Destroy()
 		end
- 
+
 		return windowModule
 	end
 end
- 
+
 return LB_MODULE
